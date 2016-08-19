@@ -182,19 +182,27 @@ int main()
 //    findWords(boggle, word);
 
     // Please note that it could take a very long time to search through the "word.list" file
-    printf("Start to search \"word.list\"...\n");
     f = fopen("word.list", "r+");
-    while(fgets(word, sizeof(word), f))
+    if(f != NULL)
     {
-    	// Replace line-feed with string terminator
-    	length = strlen(word);
-    	if(*(word + length - 1) == '\n')
-    		*(word + length - 1) = '\0';
+    	printf("Start to search \"word.list\"...\n");
+		while(fgets(word, sizeof(word), f))
+		{
+			// Replace line-feed with string terminator
+			length = strlen(word);
+			if(*(word + length - 1) == '\n')
+				*(word + length - 1) = '\0';
 
-    	// Find word
-    	findWords(boggle, word);
+			// Find word
+			findWords(boggle, word);
+		}
+		fclose(f);
+		printf("Search finished\n");
     }
-    fclose(f);
-    printf("Search finished\n");
+    else
+    {
+    	printf("Failed to open \"word.list\"\n");
+    }
+
     return 0;
 }
